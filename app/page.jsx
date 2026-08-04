@@ -72,7 +72,7 @@ const amenities = [
   },
   {
     title: "Arrivée flexible",
-    text: "Check-in dès 15h, check-out à 11h, aménageable sur demande.",
+    text: "Check-in dès 18h, check-out à 11h, aménageable sur demande.",
     icon: "M12 7v5l3 3",
     circle: true,
   },
@@ -87,7 +87,7 @@ const plaisirs = [
   { label: "Petit déjeuner", price: "15€" },
   { label: "Coffret coquin", price: "50€" },
   { label: "Heure supplémentaire", price: "20€" },
-  { label: "Carte cadeau séjour", price: "dès 150€" },
+  { label: "Carte cadeau séjour", price: "dès 190€" },
 ];
 
 const locItems = [
