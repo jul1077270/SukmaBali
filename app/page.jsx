@@ -8,9 +8,7 @@ const coconImages = [
   { src: "/images/cocon-1-verriere.jpg", alt: "Vue à travers la verrière sur la chambre baldaquin et le coin repas" },
   { src: "/images/cocon-2-ambiance.jpg", alt: "Ambiance tamisée de la salle de bain balnéo avec plantes suspendues" },
   { src: "/images/cocon-3-tete-de-lit.jpg", alt: "Tête de lit avec cadre végétal et coussins tressés" },
-  { src: "/images/cocon-4-coin-repas.jpg", alt: "Coin repas en bois brut avec verres à pied et vaisselle en grès" },
   { src: "/images/cocon-5-peignoirs.jpg", alt: "Peignoirs et linge de bain pliés sur le lit avec feuilles tropicales" },
-  { src: "/images/cocon-6-ensemble.jpg", alt: "Vue d'ensemble de la suite avec baignoire balnéo, bar et lit voilé" },
 ];
 
 const cuisineImages = [
