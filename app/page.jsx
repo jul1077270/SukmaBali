@@ -70,7 +70,7 @@ const amenities = [
   },
   {
     title: "Arrivée flexible",
-    text: "Check-in dès 18h, check-out à 11h, aménageable sur demande.",
+    text: "Check-in dès 15h, check-out à 11h, aménageable sur demande.",
     icon: "M12 7v5l3 3",
     circle: true,
   },
@@ -85,7 +85,7 @@ const plaisirs = [
   { label: "Petit déjeuner", price: "15€" },
   { label: "Coffret coquin", price: "50€" },
   { label: "Heure supplémentaire", price: "20€" },
-  { label: "Carte cadeau séjour", price: "dès 190€" },
+  { label: "Carte cadeau séjour", price: "dès 150€" },
 ];
 
 const locItems = [
@@ -265,22 +265,6 @@ export default function Home() {
             ))}
           </Reveal>
 
-          <Reveal as="div" className="plaisirs-feature">
-            <PhotoPanel
-              src="/images/plaisir-petit-dejeuner.jpg"
-              alt="Petit-déjeuner gourmand avec croissant, fruits exotiques et café"
-            />
-            <div>
-              <h3>Des attentions pensées pour le voyage</h3>
-              <p>
-                Un petit-déjeuner balinais, un plateau de fruits exotiques ou un panier
-                pique-nique gourmand pour prolonger l&apos;évasion sans sortir du cocon.{" "}
-                <strong>Ajoutez une touche parfumée</strong> avec notre décoration frangipanier
-                & bougies, pensée comme un rituel d&apos;arrivée.
-              </p>
-            </div>
-          </Reveal>
-
           <Reveal as="div" className="plaisirs-feature reverse">
             <div>
               <h3>Douceur, liberté et souvenirs</h3>
@@ -384,14 +368,25 @@ export default function Home() {
             Disponibilités en temps réel, confirmation immédiate. Ajoutez vos dates et laissez la
             ville s&apos;effacer.
           </p>
-          <a
-            href="https://www.airbnb.fr/rooms/1727460335718231556"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn solid"
-          >
-            Voir les disponibilités sur Airbnb
-          </a>
+          <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: 8 }}>
+            <a
+              href="https://www.airbnb.fr/rooms/1727460335718231556"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn solid"
+            >
+              Voir les disponibilités sur Airbnb
+            </a>
+            <a
+              href="https://www.booking.com/hotel/fr/suite-balneo-sauna-couple-vue-marne-15mn-disney.fr.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn"
+              style={{ borderColor: "var(--cream)", color: "var(--cream)" }}
+            >
+              Réserver sur Booking.com
+            </a>
+          </div>
         </Reveal>
       </section>
 
@@ -449,6 +444,13 @@ export default function Home() {
                   rel="noopener noreferrer"
                 >
                   Airbnb
+                </a>
+                <a
+                  href="https://www.booking.com/hotel/fr/suite-balneo-sauna-couple-vue-marne-15mn-disney.fr.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Booking.com
                 </a>
               </div>
             </div>
