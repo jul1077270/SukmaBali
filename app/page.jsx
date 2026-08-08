@@ -70,7 +70,7 @@ const amenities = [
   },
   {
     title: "Arrivée flexible",
-    text: "Check-in dès 21h, check-out à 11h, aménageable sur demande.",
+    text: "Check-in dès 16h, check-out à 11h, aménageable sur demande.",
     icon: "M12 7v5l3 3",
     circle: true,
   },
