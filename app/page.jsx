@@ -3,11 +3,16 @@ import Reveal from "@/components/Reveal";
 import Carousel from "@/components/Carousel";
 import PhotoPanel from "@/components/PhotoPanel";
 import BackToTop from "@/components/BackToTop";
+import ContactForm from "@/components/ContactForm";
 
 const coconImages = [
+  { src: "/images/cocon-7-nuit-large.jpg", alt: "Chambre et sauna ambiance nocturne bleutée depuis la baignoire balnéo" },
   { src: "/images/cocon-1-verriere.jpg", alt: "Vue à travers la verrière sur la chambre baldaquin et le coin repas" },
+  { src: "/images/cocon-8-nuit-repas.jpg", alt: "Coin repas et baignoire balnéo en ambiance tamisée le soir" },
   { src: "/images/cocon-2-ambiance.jpg", alt: "Ambiance tamisée de la salle de bain balnéo avec plantes suspendues" },
+  { src: "/images/cocon-9-nuit-mosaique.jpg", alt: "Mosaïque de vues nocturnes de la suite : bain, coin repas et chambre" },
   { src: "/images/cocon-3-tete-de-lit.jpg", alt: "Tête de lit avec cadre végétal et coussins tressés" },
+  { src: "/images/cocon-10-nuit-jets.jpg", alt: "Baignoire balnéo à jets illuminée en bleu la nuit" },
   { src: "/images/cocon-5-peignoirs.jpg", alt: "Peignoirs et linge de bain pliés sur le lit avec feuilles tropicales" },
 ];
 
@@ -70,7 +75,7 @@ const amenities = [
   },
   {
     title: "Arrivée flexible",
-    text: "Check-in dès 16h, check-out à 11h, aménageable sur demande.",
+    text: "Check-in dès 15h, check-out à 11h, aménageable sur demande.",
     icon: "M12 7v5l3 3",
     circle: true,
   },
@@ -84,7 +89,7 @@ const amenities = [
 const plaisirs = [
   { label: "Petit déjeuner", price: "15€" },
   { label: "Coffret coquin", price: "50€" },
-  { label: "Heure décalée", price: "20€" },
+  { label: "Heure supplémentaire", price: "20€" },
   { label: "Carte cadeau séjour", price: "dès 150€" },
 ];
 
@@ -163,7 +168,7 @@ export default function Home() {
         <Reveal as="div" className="wrap story">
           <PhotoPanel
             src="/images/esprit-des-lieux.jpg"
-            alt="Chambre bohème avec baignoire balnéo, bar en rotin et lit à baldaquin voilé"
+            alt="Coin baignoire balnéo avec miroir, bougies et table dressée en ambiance nocturne"
           />
           <div className="story-text">
             <span className="eyebrow">L&apos;esprit des lieux</span>
@@ -356,6 +361,55 @@ export default function Home() {
             ))}
           </Reveal>
         </div>
+      </section>
+
+      <section id="contact" className="contact-section">
+        <Reveal as="div" className="wrap contact-grid">
+          <div>
+            <span className="eyebrow">Une question, une envie particulière ?</span>
+            <h2>Contact &amp; demande de réservation</h2>
+            <p style={{ marginTop: 18, color: "#5c5346", fontSize: 16, lineHeight: 1.7 }}>
+              Écrivez-nous directement, ou passez par Airbnb / Booking pour une réservation
+              immédiate avec paiement en ligne.
+            </p>
+
+            <div className="contact-info-list">
+              <div className="contact-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <path d="M3 7l9 6 9-6M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" />
+                </svg>
+                <a href="mailto:sukmabali-suite@gmail.com">sukmabali-suite@gmail.com</a>
+              </div>
+              <div className="contact-info-item">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6">
+                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z" />
+                </svg>
+                <a href="tel:+33750244250">07 50 24 42 50</a>
+              </div>
+            </div>
+
+            <div className="booking-links">
+              <a
+                href="https://www.airbnb.fr/rooms/1727460335718231556"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn solid"
+              >
+                Airbnb
+              </a>
+              <a
+                href="https://www.booking.com/hotel/fr/suite-balneo-sauna-couple-vue-marne-15mn-disney.fr.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn"
+              >
+                Booking.com
+              </a>
+            </div>
+          </div>
+
+          <ContactForm />
+        </Reveal>
       </section>
 
       <section id="reserver" className="cta-band">
