@@ -529,7 +529,7 @@ export default function Home() {
     <path d="M4 4l16 16" />
   </svg>
   <strong style={{ fontSize: 17, fontWeight: 600 }}>
-    Logement non accessible aux personnes à mobilité réduite (présence de marches).
+    Logement non accessible aux personnes en fauteuil roulant (présence de 3 marches).
   </strong>
 </div>
           <div className="foot-bottom">
