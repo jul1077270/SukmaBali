@@ -509,6 +509,29 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <div style={{
+  background: "var(--gold)",
+  color: "var(--teak)",
+  borderRadius: 4,
+  padding: "18px 24px",
+  marginTop: 36,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: 12,
+  flexWrap: "wrap",
+  textAlign: "center",
+}}>
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" strokeWidth="1.8" style={{ flexShrink: 0 }}>
+    <circle cx="17" cy="6" r="2" />
+    <path d="M11 8v3l3 2 2 5M9 11l-1 3H4M11 11H8" />
+    <circle cx="6" cy="19" r="3" />
+    <path d="M4 4l16 16" />
+  </svg>
+  <strong style={{ fontSize: 17, fontWeight: 600 }}>
+    Logement non accessible aux personnes à mobilité réduite (présence de marches).
+  </strong>
+</div>
           <div className="foot-bottom">
             <span>© 2026 Sukma Bali Suite &amp; Spa. Tous droits réservés.</span>
             <span>Meaux, France</span>
