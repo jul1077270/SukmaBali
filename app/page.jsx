@@ -1,4 +1,9 @@
-import Nav from "@/components/Nav";
+"use client";
+
+import { useLanguage } from "@/components/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import NavMultilingual from "@/components/NavMultilingual";
+import { LanguageProvider } from "@/components/LanguageContext";
 import Reveal from "@/components/Reveal";
 import Carousel from "@/components/Carousel";
 import PhotoPanel from "@/components/PhotoPanel";
@@ -119,8 +124,19 @@ const avis = [
 
 export default function Home() {
   return (
+    <LanguageProvider>
+      <HomeContent />
+    </LanguageProvider>
+  );
+}
+
+function HomeContent() {
+  const { t } = useLanguage();
+  return (
     <>
-      <Nav />
+      <div id="top" />
+      <NavMultilingual />
+      <LanguageSwitcher />
 
       <section className="hero">
         <div className="hero-photo" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }} />
@@ -139,27 +155,20 @@ export default function Home() {
           <rect width="800" height="800" fill="url(#frang)" />
         </svg>
         <div className="wrap hero-inner">
-          <span className="eyebrow">Appartement entier · Meaux, à 30 min de Paris</span>
+          <span className="eyebrow">{t.hero.eyebrow}</span>
           <h1>
-            Un refuge <em>balinais</em>
+            {t.hero.titleA} <em>{t.hero.accent}</em>
             <br />
-            aux portes de Paris.
+            {t.hero.titleB}
           </h1>
-          <p className="sub">
-            Bienvenue à <strong>SUKMA BALI Suite &amp; SPA</strong>, une invitation au voyage où
-            l&apos;élégance balinaise, le bien-être et le romantisme se rencontrent.
-            <br />
-            <br />
-            Offrez-vous une parenthèse hors du temps dans une suite d&apos;exception pensée pour
-            éveiller les sens et créer des souvenirs inoubliables.
-          </p>
+          <p className="sub">{t.hero.text.split("\n\n").map((x, i) => <span key={i}>{i > 0 && <><br /><br /></>}{x}</span>)}</p>
           <div className="hero-cta">
-            <a href="#reserver" className="btn solid">Réserver mon séjour</a>
-            <a href="#espaces" className="btn">Découvrir les espaces</a>
+            <a href="#reserver" className="btn solid">{t.hero.reserve}</a>
+            <a href="#espaces" className="btn">{t.hero.discover}</a>
           </div>
         </div>
         <div className="scroll-cue">
-          <span>Défiler</span>
+          <span>{t.hero.scroll}</span>
           <span className="line" />
         </div>
       </section>
@@ -171,26 +180,11 @@ export default function Home() {
             alt="Coin baignoire balnéo avec miroir, bougies et table dressée en ambiance nocturne"
           />
           <div className="story-text">
-            <span className="eyebrow">L&apos;esprit des lieux</span>
-            <p>
-              Plus qu&apos;une suite, <strong>SUKMA BALI Suite &amp; SPA</strong> est une
-              invitation à ralentir, à se retrouver et à vivre une expérience inspirée de l&apos;art
-              de vivre balinais.
-            </p>
-            <p>
-              Chaque détail a été imaginé pour créer une atmosphère chaleureuse et apaisante : les
-              essences de bois naturel, le rotin, les matières nobles et les lumières tamisées
-              s&apos;unissent pour offrir un véritable havre de sérénité.
-            </p>
-            <p>
-              Le spa privatif, le sauna et les espaces de détente prolongent cette parenthèse hors
-              du temps, où le bien-être devient une évidence et où chaque instant invite à la
-              déconnexion.
-            </p>
-            <p>
-              Nichée à Meaux, à seulement quelques kilomètres de Paris et de Disneyland® Paris, la
-              suite vous offre l&apos;évasion d&apos;un voyage à Bali, sans quitter l&apos;Île-de-France.
-            </p>
+            <span className="eyebrow">{t.story.eyebrow}</span>
+            <p>{t.story.p1}</p>
+            <p>{t.story.p2}</p>
+            <p>{t.story.p3}</p>
+            <p>{t.story.p4}</p>
           </div>
         </Reveal>
       </section>
@@ -198,16 +192,13 @@ export default function Home() {
       <section id="espaces" className="espaces">
         <div className="wrap">
           <Reveal className="section-head">
-            <span className="eyebrow">Plan des lieux</span>
-            <h2>Les espaces</h2>
-            <p>
-              35 m² conçus comme une suite balinaise : un cocon à vivre, une cuisine à soi, une
-              bulle d&apos;eau pour se ressourcer.
-            </p>
+            <span className="eyebrow">{t.spaces.eyebrow}</span>
+            <h2>{t.spaces.title}</h2>
+            <p>{t.spaces.intro}</p>
           </Reveal>
           <div className="room-list">
-            {rooms.map((room) => (
-              <Reveal as="div" className="room" key={room.name}>
+            {t.spaces.rooms.map(([tag, name, text], i) => ({ tag, name, text, images: rooms[i].images, key: rooms[i].name })).map((room) => (
+              <Reveal as="div" className="room" key={room.key}>
                 <Carousel images={room.images} />
                 <div>
                   <div className="room-name">
@@ -225,12 +216,12 @@ export default function Home() {
       <section id="prestations">
         <div className="wrap">
           <Reveal className="section-head">
-            <span className="eyebrow">Carte de bienvenue</span>
-            <h2>Prestations</h2>
-            <p>Le confort d&apos;un hôtel haut de gamme, la discrétion d&apos;un chez-soi.</p>
+            <span className="eyebrow">{t.amenities.eyebrow}</span>
+            <h2>{t.amenities.title}</h2>
+            <p>{t.amenities.intro}</p>
           </Reveal>
           <Reveal as="div" className="amenities-grid">
-            {amenities.map((a) => (
+            {t.amenities.items.map(([title, text], i) => ({ ...amenities[i], title, text })).map((a) => (
               <div className="amenity" key={a.title}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4">
                   {a.rect && <rect x="3" y="7" width="18" height="13" rx="1" />}
@@ -248,22 +239,15 @@ export default function Home() {
       <section id="plaisirs" style={{ background: "var(--ivory-2)" }}>
         <div className="wrap">
           <Reveal className="section-head">
-            <span className="eyebrow">Sur demande</span>
-            <h2>Les petits plaisirs</h2>
+            <span className="eyebrow">{t.pleasures.eyebrow}</span>
+            <h2>{t.pleasures.title}</h2>
           </Reveal>
           <Reveal as="div" className="plaisirs-intro">
-            <p>
-              Parce qu&apos;un séjour se savoure aussi dans les détails, notre collection de
-              petits plaisirs vient prolonger la douceur de votre passage à Sukma Bali.
-            </p>
-            <p>
-              Chaque attention devient une <em>respiration en plus</em> — une gourmandise, un
-              parfum, une lumière tamisée — pensée pour envelopper votre séjour d&apos;un
-              supplément de calme.
-            </p>
+            <p>{t.pleasures.intro1}</p>
+            <p>{t.pleasures.intro2}</p>
           </Reveal>
           <Reveal as="div" className="chip-grid">
-            {plaisirs.map((p) => (
+            {t.pleasures.items.map(([label, price]) => ({ label, price })).map((p) => (
               <div className="chip" key={p.label}>
                 {p.label} <span className="price">{p.price}</span>
               </div>
@@ -272,13 +256,8 @@ export default function Home() {
 
           <Reveal as="div" className="plaisirs-feature reverse">
             <div>
-              <h3>Douceur, liberté et souvenirs</h3>
-              <p>
-                Prolongez l&apos;instant grâce à <strong>une heure supplémentaire</strong>,
-                offrez une parenthèse avec nos <strong>cartes cadeaux valables un an</strong>, et
-                laissez-vous porter : chaque option est pensée pour que le temps devienne un
-                allié, et votre séjour, un souvenir à partager.
-              </p>
+              <h3>{t.pleasures.featureTitle}</h3>
+              <p>{t.pleasures.featureText}</p>
             </div>
             <PhotoPanel
               src="/images/plaisir-carte-cadeau.jpg"
@@ -291,15 +270,11 @@ export default function Home() {
       <section id="quartier">
         <Reveal as="div" className="wrap location">
           <div>
-            <span className="eyebrow">Où poser ses valises</span>
-            <h2>Meaux, le meilleur des deux mondes</h2>
-            <p style={{ marginTop: 18, color: "#5c5346", fontSize: 16, lineHeight: 1.7 }}>
-              Ville d&apos;art et d&apos;histoire au bord de la Marne, réputée pour sa cathédrale,
-              son marché et son brie — Meaux offre le calme d&apos;une ville à taille humaine tout
-              en gardant Paris et Disneyland Paris à portée de main.
-            </p>
+            <span className="eyebrow">{t.location.eyebrow}</span>
+            <h2>{t.location.title}</h2>
+            <p style={{ marginTop: 18, color: "#5c5346", fontSize: 16, lineHeight: 1.7 }}>{t.location.text}</p>
             <div className="loc-list">
-              {locItems.map((l) => (
+              {t.location.items.map(([label, value]) => ({ label, value })).map((l) => (
                 <div className="loc-item" key={l.label}>
                   <span>{l.label}</span>
                   <span>{l.value}</span>
@@ -321,8 +296,8 @@ export default function Home() {
                 src="/images/cathedrale-meaux.jpg"
                 alt="Cathédrale Saint-Étienne de Meaux, carte postale ancienne"
               />
-              <h4>Cathédrale de Meaux</h4>
-              <p>8 min à pied</p>
+              <h4>{t.location.highlights[0][0]}</h4>
+              <p>{t.location.highlights[0][1]}</p>
             </div>
 
             <div className="highlight-card">
@@ -330,8 +305,8 @@ export default function Home() {
                 src="/images/tour-eiffel-seine.jpg"
                 alt="Tour Eiffel illuminée de nuit vue depuis la Seine"
               />
-              <h4>Disneyland Paris</h4>
-              <p>15 min en voiture</p>
+              <h4>{t.location.highlights[1][0]}</h4>
+              <p>{t.location.highlights[1][1]}</p>
             </div>
 
             <div className="highlight-card">
@@ -339,8 +314,8 @@ export default function Home() {
                 src="/images/tour-eiffel-trocadero.jpg"
                 alt="Tour Eiffel de nuit vue depuis le Trocadéro"
               />
-              <h4>Tour Eiffel, Paris</h4>
-              <p>30 min en RER P</p>
+              <h4>{t.location.highlights[2][0]}</h4>
+              <p>{t.location.highlights[2][1]}</p>
             </div>
           </Reveal>
         </div>
@@ -349,11 +324,11 @@ export default function Home() {
       <section id="avis" style={{ background: "var(--ivory-2)" }}>
         <div className="wrap">
           <Reveal className="section-head">
-            <span className="eyebrow">Ils ont posé leurs valises ici</span>
-            <h2>Avis des voyageurs</h2>
+            <span className="eyebrow">{t.reviews.eyebrow}</span>
+            <h2>{t.reviews.title}</h2>
           </Reveal>
           <Reveal as="div" className="avis-grid">
-            {avis.map((a) => (
+            {t.reviews.items.map(([quote, who]) => ({ quote, who })).map((a) => (
               <div className="avis-card" key={a.who}>
                 <p className="quote">{a.quote}</p>
                 <div className="who">{a.who}</div>
@@ -366,12 +341,9 @@ export default function Home() {
       <section id="contact" className="contact-section">
         <Reveal as="div" className="wrap contact-grid">
           <div>
-            <span className="eyebrow">Une question, une envie particulière ?</span>
-            <h2>Contact &amp; demande de réservation</h2>
-            <p style={{ marginTop: 18, color: "#5c5346", fontSize: 16, lineHeight: 1.7 }}>
-              Écrivez-nous directement, ou passez par Airbnb / Booking pour une réservation
-              immédiate avec paiement en ligne.
-            </p>
+            <span className="eyebrow">{t.contact.eyebrow}</span>
+            <h2>{t.contact.title}</h2>
+            <p style={{ marginTop: 18, color: "#5c5346", fontSize: 16, lineHeight: 1.7 }}>{t.contact.text}</p>
 
             <div className="contact-info-list">
               <div className="contact-info-item">
@@ -415,13 +387,10 @@ export default function Home() {
       <section id="reserver" className="cta-band">
         <Reveal as="div" className="wrap">
           <span className="eyebrow" style={{ color: "var(--gold-soft)" }}>
-            Prêt pour l&apos;évasion
+            {t.cta.eyebrow}
           </span>
-          <h2>Réservez votre parenthèse balinaise</h2>
-          <p>
-            Disponibilités en temps réel, confirmation immédiate. Ajoutez vos dates et laissez la
-            ville s&apos;effacer.
-          </p>
+          <h2>{t.cta.title}</h2>
+          <p>{t.cta.text}</p>
           <div style={{ display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap", marginTop: 8 }}>
             <a
               href="https://www.airbnb.fr/rooms/1727460335718231556"
@@ -429,7 +398,7 @@ export default function Home() {
               rel="noopener noreferrer"
               className="btn solid"
             >
-              Voir les disponibilités sur Airbnb
+              {t.cta.airbnb}
             </a>
             <a
               href="https://www.booking.com/hotel/fr/suite-balneo-sauna-couple-vue-marne-15mn-disney.fr.html"
@@ -438,7 +407,7 @@ export default function Home() {
               className="btn"
               style={{ borderColor: "var(--cream)", color: "var(--cream)" }}
             >
-              Réserver sur Booking.com
+              {t.cta.booking}
             </a>
           </div>
         </Reveal>
@@ -465,19 +434,16 @@ export default function Home() {
                   Suite &amp; Spa
                 </span>
               </div>
-              <p>
-                Un appartement entier à Meaux, à 30 min de Paris et 20 min de Disneyland Paris,
-                habillé de teck et de rotin comme une villa balinaise miniature.
-              </p>
+              <p>{t.footer.text}</p>
             </div>
             <div className="foot-cols">
               <div className="foot-col">
-                <h4>Contact</h4>
+                <h4>{t.footer.contact}</h4>
                 <a href="mailto:sukmabali-suite@gmail.com">sukmabali-suite@gmail.com</a>
                 <a href="tel:+33750244250">07 50 24 42 50</a>
               </div>
               <div className="foot-col">
-                <h4>Suivre</h4>
+                <h4>{t.footer.follow}</h4>
                 <a
                   href="https://www.instagram.com/sukmabali_suiteandspa?igsh=dHMyNjU5YWJsdTQ1"
                   target="_blank"
@@ -529,12 +495,12 @@ export default function Home() {
     <path d="M4 4l16 16" />
   </svg>
   <strong style={{ fontSize: 17, fontWeight: 600 }}>
-    Logement non accessible aux personnes en fauteuil roulant (présence de 3 marches).
+    {t.footer.accessibility}
   </strong>
 </div>
           <div className="foot-bottom">
-            <span>© 2026 Sukma Bali Suite &amp; Spa. Tous droits réservés.</span>
-            <span>Meaux, France</span>
+            <span>{t.footer.rights}</span>
+            <span>{t.footer.city}</span>
           </div>
         </div>
       </footer>
