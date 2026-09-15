@@ -136,7 +136,7 @@ function HomeContent() {
     <>
       <div id="top" />
       <NavMultilingual />
-      <LanguageSwitcher />
+      
 
       <section className="hero">
         <div className="hero-photo" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }} />
