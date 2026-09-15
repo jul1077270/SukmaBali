@@ -9,7 +9,6 @@ import PhotoPanel from "@/components/PhotoPanel";
 import BackToTop from "@/components/BackToTop";
 import ContactForm from "@/components/ContactForm";
 
-
 const coconImages = [
   { src: "/images/cocon-7-nuit-large.jpg", alt: "Chambre et sauna ambiance nocturne bleutée depuis la baignoire balnéo" },
   { src: "/images/cocon-1-verriere.jpg", alt: "Vue à travers la verrière sur la chambre baldaquin et le coin repas" },
@@ -136,7 +135,6 @@ function HomeContent() {
     <>
       <div id="top" />
       <NavMultilingual />
-      
 
       <section className="hero">
         <div className="hero-photo" style={{ backgroundImage: "url('/images/hero-bg.jpg')" }} />
