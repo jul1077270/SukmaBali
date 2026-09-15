@@ -9,6 +9,7 @@ import Carousel from "@/components/Carousel";
 import PhotoPanel from "@/components/PhotoPanel";
 import BackToTop from "@/components/BackToTop";
 import ContactForm from "@/components/ContactForm";
+import "./language-switcher.css";
 
 const coconImages = [
   { src: "/images/cocon-7-nuit-large.jpg", alt: "Chambre et sauna ambiance nocturne bleutée depuis la baignoire balnéo" },
