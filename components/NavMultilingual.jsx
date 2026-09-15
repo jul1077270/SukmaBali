@@ -1,475 +1,247 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLanguage } from "./LanguageContext";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 export default function NavMultilingual() {
   const { t } = useLanguage();
-  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const links = [
-    { href: "#histoire", label: t.nav.story },
-    { href: "#espaces", label: t.nav.spaces },
-    { href: "#prestations", label: t.nav.amenities },
-    { href: "#plaisirs", label: t.nav.pleasures },
-    { href: "#quartier", label: t.nav.location },
-    { href: "#avis", label: t.nav.reviews },
-    { href: "#contact", label: t.nav.contact },
+  const items = [
+    ["#histoire", t.nav.story],
+    ["#espaces", t.nav.spaces],
+    ["#prestations", t.nav.amenities],
+    ["#plaisirs", t.nav.pleasures],
+    ["#quartier", t.nav.location],
+    ["#avis", t.nav.reviews],
+    ["#contact", t.nav.contact],
   ];
 
-  const handleLinkClick = () => {
-    setMenuOpen(false);
-  };
+  const closeMenu = () => setMenuOpen(false);
 
   return (
-    <>
-      <header className={`sukma-nav ${scrolled ? "sukma-nav--scrolled" : ""}`}>
-        <div className="sukma-nav__inner">
+    <header className="sukma-nav">
+      <div className="sukma-nav-inner">
+        <a href="#top" className="sukma-nav-logo" onClick={closeMenu}>
+          <span>SUKMA BALI</span>
+          <small>Suite &amp; SPA</small>
+        </a>
 
-          {/* LOGO */}
-          <a href="#top" className="sukma-nav__brand">
-            <span className="sukma-nav__brand-main">
-              SUKMA BALI
-            </span>
-            <span className="sukma-nav__brand-sub">
-              Suite & SPA
-            </span>
-          </a>
-
-          {/* NAVIGATION DESKTOP */}
-          <nav className="sukma-nav__links">
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="sukma-nav__link"
-              >
-                {link.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* ACTIONS */}
-          <div className="sukma-nav__actions">
-
-            <LanguageSwitcher />
-
-            <a
-              href="#reserver"
-              className="sukma-nav__booking"
-            >
-              <span>{t.nav.book}</span>
-              <span className="sukma-nav__booking-arrow">↗</span>
-            </a>
-
-            {/* BURGER MOBILE */}
-            <button
-              className={`sukma-nav__burger ${
-                menuOpen ? "is-open" : ""
-              }`}
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Menu"
-              aria-expanded={menuOpen}
-            >
-              <span></span>
-              <span></span>
-              <span></span>
-            </button>
-          </div>
-        </div>
-
-        {/* MENU MOBILE */}
-        <div
-          className={`sukma-nav__mobile ${
-            menuOpen ? "is-open" : ""
-          }`}
-        >
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="sukma-nav__mobile-link"
-              onClick={handleLinkClick}
-            >
-              {link.label}
-            </a>
+        <nav className="sukma-nav-links" aria-label="Navigation principale">
+          {items.map(([href, label]) => (
+            <a key={href} href={href}>{label}</a>
           ))}
+        </nav>
 
-          <a
-            href="#reserver"
-            className="sukma-nav__mobile-booking"
-            onClick={handleLinkClick}
-          >
+        <div className="sukma-nav-actions">
+          <LanguageSwitcher />
+          <a href="#reserver" className="sukma-nav-book" onClick={closeMenu}>
             {t.nav.book}
             <span>↗</span>
           </a>
+          <button
+            type="button"
+            className={`sukma-nav-burger ${menuOpen ? "is-open" : ""}`}
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label="Menu"
+            aria-expanded={menuOpen}
+          >
+            <i /><i /><i />
+          </button>
         </div>
-      </header>
+      </div>
+
+      <div className={`sukma-nav-mobile ${menuOpen ? "is-open" : ""}`}>
+        {items.map(([href, label]) => (
+          <a key={href} href={href} onClick={closeMenu}>{label}</a>
+        ))}
+        <a href="#reserver" className="mobile-book" onClick={closeMenu}>
+          {t.nav.book} <span>↗</span>
+        </a>
+      </div>
 
       <style jsx>{`
         .sukma-nav {
           position: fixed;
           top: 0;
           left: 0;
-          width: 100%;
+          right: 0;
           z-index: 900;
-          padding: 18px 32px;
-          background: transparent;
-          transition:
-            background 0.35s ease,
-            padding 0.35s ease,
-            box-shadow 0.35s ease;
+          padding: 18px 30px;
+          background: linear-gradient(to bottom, rgba(0,0,0,.48), transparent);
+          pointer-events: none;
         }
-
-        .sukma-nav--scrolled {
-          padding: 11px 32px;
-          background: rgba(22, 20, 17, 0.92);
-          backdrop-filter: blur(16px);
-          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
-        }
-
-        .sukma-nav__inner {
-          width: 100%;
+        .sukma-nav-inner {
           max-width: 1500px;
           margin: 0 auto;
-
+          min-height: 48px;
           display: flex;
           align-items: center;
-          justify-content: space-between;
-          gap: 30px;
+          gap: 28px;
+          pointer-events: auto;
         }
-
-        /* LOGO */
-
-        .sukma-nav__brand {
-          flex-shrink: 0;
+        .sukma-nav-logo {
+          flex: 0 0 auto;
           display: flex;
           flex-direction: column;
+          color: #fff;
           text-decoration: none;
-          color: white;
           line-height: 1;
-          min-width: 145px;
+          text-shadow: 0 1px 8px rgba(0,0,0,.25);
         }
-
-        .sukma-nav__brand-main {
-          font-family: Georgia, "Times New Roman", serif;
-          font-size: 18px;
-          letter-spacing: 0.18em;
-          font-weight: 500;
+        .sukma-nav-logo span {
+          font-family: Georgia, serif;
+          font-size: 17px;
+          letter-spacing: .18em;
         }
-
-        .sukma-nav__brand-sub {
+        .sukma-nav-logo small {
           margin-top: 6px;
           font-size: 8px;
-          letter-spacing: 0.32em;
+          letter-spacing: .3em;
           text-transform: uppercase;
-          opacity: 0.7;
-          padding-left: 2px;
+          opacity: .8;
         }
-
-        /* LIENS */
-
-        .sukma-nav__links {
+        .sukma-nav-links {
+          flex: 1;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: clamp(14px, 1.8vw, 30px);
-          flex: 1;
+          gap: clamp(12px, 1.55vw, 26px);
         }
-
-        .sukma-nav__link {
+        .sukma-nav-links a {
           position: relative;
-          color: rgba(255, 255, 255, 0.9);
+          color: rgba(255,255,255,.92);
           text-decoration: none;
-
-          font-size: 11px;
-          font-weight: 400;
-          letter-spacing: 0.08em;
+          font-size: 10px;
+          letter-spacing: .08em;
           text-transform: uppercase;
-
           white-space: nowrap;
           padding: 8px 0;
-
-          transition:
-            color 0.25s ease,
-            opacity 0.25s ease;
+          text-shadow: 0 1px 7px rgba(0,0,0,.25);
+          transition: color .2s ease;
         }
-
-        .sukma-nav__link::after {
+        .sukma-nav-links a::after {
           content: "";
           position: absolute;
           left: 50%;
-          bottom: 0;
-
+          bottom: 1px;
           width: 0;
           height: 1px;
-
           background: var(--gold, #b8935b);
-
           transform: translateX(-50%);
-          transition: width 0.3s ease;
+          transition: width .25s ease;
         }
-
-        .sukma-nav__link:hover {
-          color: white;
-        }
-
-        .sukma-nav__link:hover::after {
-          width: 100%;
-        }
-
-        /* ACTIONS */
-
-        .sukma-nav__actions {
+        .sukma-nav-links a:hover { color: #fff; }
+        .sukma-nav-links a:hover::after { width: 100%; }
+        .sukma-nav-actions {
+          flex: 0 0 auto;
           display: flex;
           align-items: center;
-          gap: 12px;
-          flex-shrink: 0;
+          gap: 9px;
+          pointer-events: auto;
         }
-
-        /*
-          Le LanguageSwitcher existant est volontairement
-          rendu plus discret ici.
-        */
-
-        .sukma-nav__actions :global(.language-switcher) {
+        /* Important : le sélecteur de langue n'est plus fixed ni blanc */
+        .sukma-nav :global(.language-switcher) {
           position: static !important;
+          z-index: auto;
           display: flex;
-          padding: 2px;
+          align-items: center;
           gap: 1px;
-          background: rgba(255, 255, 255, 0.08);
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          box-shadow: none;
-          backdrop-filter: blur(10px);
+          padding: 3px;
+          border: 1px solid rgba(255,255,255,.28);
+          border-radius: 999px;
+          background: rgba(20,18,15,.35);
+          box-shadow: 0 3px 12px rgba(0,0,0,.12);
+          backdrop-filter: blur(9px);
         }
-
-        .sukma-nav__actions :global(.language-switcher button) {
-          color: rgba(255, 255, 255, 0.8);
+        .sukma-nav :global(.language-switcher button) {
+          color: rgba(255,255,255,.82);
           padding: 5px 7px;
-          font-size: 10px;
+          font-size: 9px;
         }
-
-        .sukma-nav__actions :global(.language-switcher button.active) {
+        .sukma-nav :global(.language-switcher button.active) {
           background: var(--gold, #b8935b);
-          color: white;
+          color: #fff;
         }
-
-        /* BOUTON RESERVER */
-
-        .sukma-nav__booking {
+        .sukma-nav :global(.language-switcher button:hover) {
+          background: rgba(255,255,255,.12);
+          transform: none;
+        }
+        .sukma-nav-book {
           display: inline-flex;
           align-items: center;
-          gap: 8px;
-
-          padding: 11px 16px;
-
-          border: 1px solid rgba(255, 255, 255, 0.5);
+          gap: 7px;
+          padding: 10px 14px;
+          border: 1px solid rgba(255,255,255,.58);
           border-radius: 2px;
-
-          color: white;
+          color: #fff;
           text-decoration: none;
-
-          font-size: 10px;
-          font-weight: 500;
-          letter-spacing: 0.12em;
+          font-size: 9px;
+          letter-spacing: .12em;
           text-transform: uppercase;
-
-          transition:
-            background 0.3s ease,
-            border-color 0.3s ease,
-            color 0.3s ease;
+          white-space: nowrap;
+          background: rgba(0,0,0,.08);
+          transition: background .2s ease, border-color .2s ease;
         }
-
-        .sukma-nav__booking:hover {
+        .sukma-nav-book:hover {
           background: var(--gold, #b8935b);
           border-color: var(--gold, #b8935b);
-          color: white;
         }
-
-        .sukma-nav__booking-arrow {
-          font-size: 14px;
-          line-height: 1;
-          transition: transform 0.3s ease;
+        .sukma-nav-book span { font-size: 13px; }
+        .sukma-nav-burger { display: none; }
+        .sukma-nav-mobile { display: none; }
+        @media (max-width: 1050px) {
+          .sukma-nav-links { gap: 12px; }
+          .sukma-nav-links a { font-size: 9px; }
         }
-
-        .sukma-nav__booking:hover .sukma-nav__booking-arrow {
-          transform: translate(2px, -2px);
-        }
-
-        /* BURGER */
-
-        .sukma-nav__burger {
-          display: none;
-          width: 40px;
-          height: 40px;
-          border: 0;
-          background: transparent;
-          padding: 8px;
-          cursor: pointer;
-        }
-
-        .sukma-nav__burger span {
-          display: block;
-          width: 24px;
-          height: 1px;
-          margin: 5px auto;
-          background: white;
-          transition: 0.3s ease;
-        }
-
-        .sukma-nav__burger.is-open span:nth-child(1) {
-          transform: translateY(6px) rotate(45deg);
-        }
-
-        .sukma-nav__burger.is-open span:nth-child(2) {
-          opacity: 0;
-        }
-
-        .sukma-nav__burger.is-open span:nth-child(3) {
-          transform: translateY(-6px) rotate(-45deg);
-        }
-
-        /* MOBILE */
-
-        .sukma-nav__mobile {
-          display: none;
-        }
-
-        @media (max-width: 1150px) {
-          .sukma-nav__links {
-            gap: 14px;
+        @media (max-width: 900px) {
+          .sukma-nav { padding: 11px 15px; background: rgba(18,16,14,.78); backdrop-filter: blur(12px); }
+          .sukma-nav-links, .sukma-nav-book { display: none; }
+          .sukma-nav-inner { justify-content: space-between; }
+          .sukma-nav-burger {
+            display: flex;
+            width: 38px;
+            height: 38px;
+            padding: 7px;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            border: 0;
+            background: transparent;
+            cursor: pointer;
           }
-
-          .sukma-nav__link {
-            font-size: 9px;
-          }
-
-          .sukma-nav__booking {
-            padding: 9px 12px;
-          }
-        }
-
-        @media (max-width: 950px) {
-          .sukma-nav {
-            padding: 12px 18px;
-          }
-
-          .sukma-nav__links {
-            display: none;
-          }
-
-          .sukma-nav__booking {
-            display: none;
-          }
-
-          .sukma-nav__burger {
-            display: block;
-          }
-
-          .sukma-nav__actions {
-            gap: 8px;
-          }
-
-          .sukma-nav__mobile {
+          .sukma-nav-burger i { display:block; width:23px; height:1px; background:#fff; transition:.2s ease; }
+          .sukma-nav-burger.is-open i:nth-child(1) { transform: translateY(6px) rotate(45deg); }
+          .sukma-nav-burger.is-open i:nth-child(2) { opacity:0; }
+          .sukma-nav-burger.is-open i:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
+          .sukma-nav-mobile {
             display: flex;
             position: absolute;
             top: 100%;
             left: 12px;
             right: 12px;
-
             flex-direction: column;
-            gap: 0;
-
-            padding: 10px 0;
-
-            background: rgba(22, 20, 17, 0.97);
-            backdrop-filter: blur(18px);
-
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 8px 0;
+            background: rgba(20,18,15,.97);
+            border: 1px solid rgba(255,255,255,.1);
             border-radius: 3px;
-
             opacity: 0;
             visibility: hidden;
             transform: translateY(-8px);
-
-            transition:
-              opacity 0.25s ease,
-              visibility 0.25s ease,
-              transform 0.25s ease;
+            transition: .2s ease;
+            pointer-events: none;
           }
-
-          .sukma-nav__mobile.is-open {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-          }
-
-          .sukma-nav__mobile-link {
-            padding: 14px 22px;
-
-            color: rgba(255, 255, 255, 0.9);
-            text-decoration: none;
-
-            font-size: 11px;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-          }
-
-          .sukma-nav__mobile-link:hover {
-            color: var(--gold, #b8935b);
-          }
-
-          .sukma-nav__mobile-booking {
-            margin: 14px 18px 8px;
-            padding: 13px;
-
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-
-            color: white;
-            background: var(--gold, #b8935b);
-
-            text-decoration: none;
-
-            font-size: 10px;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-          }
+          .sukma-nav-mobile.is-open { opacity:1; visibility:visible; transform:none; pointer-events:auto; }
+          .sukma-nav-mobile a { padding: 13px 20px; color:#fff; text-decoration:none; font-size:10px; letter-spacing:.12em; text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,.07); }
+          .sukma-nav-mobile .mobile-book { margin:10px 15px 5px; text-align:center; background:var(--gold,#b8935b); border:0; }
         }
-
         @media (max-width: 500px) {
-          .sukma-nav__brand-main {
-            font-size: 15px;
-          }
-
-          .sukma-nav__brand-sub {
-            font-size: 7px;
-          }
-
-          .sukma-nav__actions :global(.language-switcher button span) {
-            display: none;
-          }
-
-          .sukma-nav__actions :global(.language-switcher button) {
-            padding: 6px;
-          }
+          .sukma-nav :global(.language-switcher button span) { display:none; }
+          .sukma-nav :global(.language-switcher button) { padding:6px; }
+          .sukma-nav-logo span { font-size:15px; }
         }
       `}</style>
-    </>
+    </header>
   );
 }
