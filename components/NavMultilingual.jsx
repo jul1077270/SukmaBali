@@ -50,19 +50,28 @@ export default function NavMultilingual() {
         <div className="sukma-nav-actions">
           {/* Sélecteur de langue intégré directement dans la navigation */}
           <div className="sukma-languages" aria-label="Choisir la langue">
-            {languages.map(({ code, label, flag }) => (
-              <button
-                key={code}
-                type="button"
-                className={lang === code ? "active" : ""}
-                onClick={() => setLang(code)}
-                aria-label={label}
-                title={label}
-              >
-                <span className="flag">{flag}</span>
-                <span className="code">{code.toUpperCase()}</span>
-              </button>
-            ))}
+            {languages.map((language) => {
+              const code = language.code;
+              const label = language.label;
+              const flag = language.flag;
+
+              return (
+                <button
+                  key={code}
+                  type="button"
+                  className={`sukma-language-btn ${lang === code ? "active" : ""}`}
+                  onClick={() => {
+                    setLang(code);
+                    setMenuOpen(false);
+                  }}
+                  aria-label={label}
+                  title={label}
+                >
+                  <span className="flag">{flag}</span>
+                  <span className="code">{code.toUpperCase()}</span>
+                </button>
+              );
+            })}
           </div>
 
           <a
@@ -113,12 +122,13 @@ export default function NavMultilingual() {
         }
 
         .sukma-nav-inner {
+          width: 100%;
           max-width: 1500px;
           margin: 0 auto;
           min-height: 48px;
           display: flex;
           align-items: center;
-          gap: 28px;
+          gap: 24px;
         }
 
         .sukma-nav-logo {
@@ -146,11 +156,13 @@ export default function NavMultilingual() {
         }
 
         .sukma-nav-links {
-          flex: 1;
+          flex: 1 1 auto;
+          min-width: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: clamp(12px, 1.55vw, 26px);
+          gap: clamp(10px, 1.35vw, 24px);
+          overflow: hidden;
         }
 
         .sukma-nav-links a {
@@ -181,12 +193,20 @@ export default function NavMultilingual() {
 
         .sukma-nav-actions {
           flex: 0 0 auto;
+          margin-left: auto;
           display: flex;
           align-items: center;
+          justify-content: flex-end;
           gap: 9px;
+          position: relative;
+          z-index: 20;
+          pointer-events: auto;
         }
 
         .sukma-languages {
+          position: relative;
+          z-index: 30;
+          pointer-events: auto;
           display: flex;
           align-items: center;
           gap: 1px;
@@ -198,7 +218,9 @@ export default function NavMultilingual() {
           backdrop-filter: blur(9px);
         }
 
-        .sukma-languages button {
+        .sukma-languages button.sukma-language-btn {
+          appearance: none;
+          -webkit-appearance: none;
           display: flex;
           align-items: center;
           gap: 3px;
@@ -213,12 +235,12 @@ export default function NavMultilingual() {
           transition: background .2s ease, color .2s ease;
         }
 
-        .sukma-languages button:hover {
+        .sukma-languages button.sukma-language-btn:hover {
           background: rgba(255,255,255,.12);
           color: #fff;
         }
 
-        .sukma-languages button.active {
+        .sukma-languages button.sukma-language-btn.active {
           background: var(--gold, #b8935b);
           color: #fff;
         }
