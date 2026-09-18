@@ -438,7 +438,7 @@ function HomeContent() {
               <div className="foot-col">
                 <h4>{t.footer.contact}</h4>
                 <a href="mailto:sukmabali-suite@gmail.com">sukmabali-suite@gmail.com</a>
-                <a href="tel:+33750244250">07 50 24 42 50</a>
+                <a href="tel:+33750244250">+33 7 50 24 42 50</a>
               </div>
               <div className="foot-col">
                 <h4>{t.footer.follow}</h4>
